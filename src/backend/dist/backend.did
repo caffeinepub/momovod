@@ -1,0 +1,100 @@
+type http_request_result = 
+ record {
+   body: blob;
+   headers: vec http_header;
+   status: nat;
+ };
+type http_header = 
+ record {
+   name: text;
+   value: text;
+ };
+type VodId = nat;
+type VideoUpdateFields = 
+ record {
+   type_name: opt text;
+   vod_actor: opt text;
+   vod_area: opt text;
+   vod_content: opt text;
+   vod_director: opt text;
+   vod_name: opt text;
+   vod_pic: opt text;
+   vod_play_from: opt text;
+   vod_play_url: opt text;
+   vod_remarks: opt text;
+   vod_score: opt text;
+   vod_year: opt text;
+ };
+type VideoInfo = 
+ record {
+   type_id: TypeId;
+   type_name: text;
+   vod_actor: text;
+   vod_area: text;
+   vod_content: text;
+   vod_director: text;
+   vod_id: VodId;
+   vod_name: text;
+   vod_pic: text;
+   vod_play_from: text;
+   vod_play_url: text;
+   vod_remarks: text;
+   vod_score: text;
+   vod_year: text;
+ };
+type TypeId = nat;
+type TransformationOutput = 
+ record {
+   body: blob;
+   headers: vec http_header;
+   status: nat;
+ };
+type TransformationInput = 
+ record {
+   context: blob;
+   response: http_request_result;
+ };
+type Timestamp = int;
+type ScrapeStatus = 
+ variant {
+   completed: record {
+                totalCategories: nat;
+                totalVideos: nat;
+              };
+   error: text;
+   idle;
+   running;
+ };
+type PaginatedVideos = 
+ record {
+   items: vec VideoInfo;
+   page: nat;
+   pageSize: nat;
+   total: nat;
+ };
+type Category = 
+ record {
+   type_id: TypeId;
+   type_name: text;
+   type_pid: TypeId;
+ };
+type ApiConfig = 
+ record {
+   apiBaseUrl: text;
+   lastScrapeTime: opt Timestamp;
+ };
+service : {
+  claimOwner: () -> (bool);
+  deleteVideo: (vodId: VodId) -> (bool);
+  getApiConfig: () -> (ApiConfig) query;
+  getCategories: () -> (vec Category) query;
+  getScrapeStatus: () -> (ScrapeStatus) query;
+  getVideoById: (vodId: VodId) -> (opt VideoInfo) query;
+  getVideosByCategory: (typeId: TypeId, page: nat, pageSize: nat) ->
+   (PaginatedVideos) query;
+  searchVideos: (keyword: text) -> (vec VideoInfo) query;
+  setApiConfig: (url: text) -> ();
+  transform: (input: TransformationInput) -> (TransformationOutput) query;
+  triggerScrape: () -> ();
+  updateVideo: (vodId: VodId, fields: VideoUpdateFields) -> (bool);
+}

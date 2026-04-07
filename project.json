@@ -1,0 +1,21 @@
+{
+  "overview": "A video streaming website with a protected admin panel for scraping and managing videos from external API sources. The public frontend allows anyone to browse and watch videos by category, while the admin backend at /momoazz lets the owner configure API sources, trigger scraping, and edit or delete videos.",
+  "features": [
+    "Public video browsing by category with pagination",
+    "Video detail page with embedded player and multiple play sources",
+    "Internet Identity protected admin panel at /momoazz",
+    "Admin scraper: configure API URL, trigger full collection, view progress",
+    "Admin video management: edit video details and delete videos",
+    "Automatic play URL normalization and source extraction"
+  ],
+  "category": "entertainment",
+  "tags": [
+    "video",
+    "streaming",
+    "scraper",
+    "admin",
+    "internet-identity",
+    "http-outcalls"
+  ],
+  "last_updated": "2026-04-07T17:01:04.360Z"
+}

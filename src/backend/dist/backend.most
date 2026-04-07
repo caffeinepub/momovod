@@ -1,0 +1,62 @@
+// Version: 1.0.0
+type Category__719885338 =
+  {
+    type_id : TypeId__455277470;
+    type_name : Text;
+    type_pid : TypeId__455277470
+  };
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type ScrapeStatus__312722955 =
+  {
+    #completed : {totalCategories : Nat; totalVideos : Nat};
+    #error : Text;
+    #idle;
+    #running
+  };
+type Timestamp__301639476 = Int;
+type Timestamp__807515103 = Timestamp__301639476;
+type TypeId__455277470 = TypeId__81167517;
+type TypeId__81167517 = Nat;
+type Video__1048425805 =
+  {
+    type_id : TypeId__455277470;
+    var type_name : Text;
+    var vod_actor : Text;
+    var vod_area : Text;
+    var vod_content : Text;
+    var vod_director : Text;
+    vod_id : VodId__213969351;
+    var vod_name : Text;
+    var vod_pic : Text;
+    var vod_play_from : Text;
+    var vod_play_url : Text;
+    var vod_remarks : Text;
+    var vod_score : Text;
+    var vod_year : Text
+  };
+type VodId__213969351 = VodId__54527792;
+type VodId__54527792 = Nat;
+actor {
+  stable apiConfig :
+    {var apiBaseUrl : Text; var lastScrapeTime : ?Timestamp__807515103};
+  stable categories :
+    {
+      var root : Node__46230540<TypeId__455277470, Category__719885338>;
+      var size : Nat__490723111
+    };
+  stable owner : {var principal : ?Principal};
+  stable scrapeStatus : {var status : ScrapeStatus__312722955};
+  stable videos :
+    {
+      var root : Node__46230540<VodId__213969351, Video__1048425805>;
+      var size : Nat__490723111
+    }
+};
